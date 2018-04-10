@@ -4,6 +4,9 @@
 
 int main( int argc, char **argv)
 {
+    FILE* f_read;
+
+    
 
     return 0;
 }
