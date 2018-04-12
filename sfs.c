@@ -1,48 +1,47 @@
-//sfs.c
+//sfs.c revised
+
 #include <stdio.h>
 #include <ctype.h>
+#include "countc.h"
+#include "countw.h"
+#include "countl.h"
 
-int main( int argc, char **argv)
+
+int main(int argc, char **argv)
 {
-    FILE* f_read;
+    
+    int lcount, ccount, wcount;
+    
 
+    if (argc=1) {
+        //make the same things but for stdio..
+        FILE* temp = freopen("temp.txt", "w+", stdout);
+        lcount = countl(temp);
+        ccount = countc(temp);
+        wcount = countw(temp);
+        fclose(temp);
+
+    } 
+
+
+
+    FILE* f_read;
     f_read = fopen(argv[1], "r");
 
     if (!f_read) {
-        printf("Uh oh. Something went wrong.\n");
+        printf("Sommat fucked up.\n");
     }
-
     else {
 
-        int c;
-        int numc;
-        int numl;
-        char buf[900];
-
-        while (!feof(f_read)){
-            
-            fgets(buf, 900, (FILE*)f_read);
-
-            if(fscanf(f_read, "%c", &c)){
-                printf("%c", c);
-
-                if (c == '\n'){
-                    numl++;
-                }
-
-                numc++;
-            }
-        }
+        lcount = countl(f_read);
+        ccount = countc(f_read);
+        wcount = countw(f_read);
         
-        printf("Num chars: %d\n", numc);
-        printf("Num lines: %d\n", numl);
+        printf("COUNTS: %d, %d, %d\n", ccount, lcount, wcount);
 
-        printf("%s", buf);
-
-        fclose(f_read);
     }
 
-    
+    fclose(f_read);
 
     return 0;
 }
